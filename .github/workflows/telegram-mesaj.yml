@@ -1,0 +1,30 @@
+name: Telegram Otomatik Mesaj
+
+on:
+  schedule:
+    # Türkiye saatiyle 11:00-23:00 arası, saatte bir çalışır.
+    # (GitHub UTC kullanır, Türkiye UTC+3 olduğu için 08:00-20:00 UTC yazıyoruz)
+    - cron: "0 8-20 * * *"
+  workflow_dispatch: {}  # "Run workflow" butonuyla elle de tetiklenebilir
+
+jobs:
+  send-message:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kodu indir
+        uses: actions/checkout@v4
+
+      - name: Python kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Kütüphaneleri kur
+        run: pip install -r requirements.txt
+
+      - name: Mesajı gönder
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+          MESSAGE_TEXT: ${{ secrets.MESSAGE_TEXT }}
+        run: python send_message.py
