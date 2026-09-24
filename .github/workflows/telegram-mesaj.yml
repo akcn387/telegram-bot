@@ -4,8 +4,7 @@ on:
   schedule:
     # Türkiye saatiyle 11:00-23:00 arası, saatte bir çalışır.
     # (GitHub UTC kullanır, Türkiye UTC+3 olduğu için 08:00-20:00 UTC yazıyoruz)
-    - cron: "0 8-20 * * *"
-  workflow_dispatch: {}  # "Run workflow" butonuyla elle de tetiklenebilir
+        - cron: "0 8-20/2 * * *"
 
 jobs:
   send-message:
